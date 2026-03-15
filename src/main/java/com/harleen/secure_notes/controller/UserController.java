@@ -1,0 +1,23 @@
+package com.harleen.secure_notes.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.harleen.secure_notes.entity.User;
+import com.harleen.secure_notes.service.UserService;
+
+@RestController
+public class UserController {
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/users")
+    List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+}
