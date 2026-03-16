@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.harleen.secure_notes.entity.Note;
+import com.harleen.secure_notes.security.UserPrincipal;
 import com.harleen.secure_notes.service.NoteService;
 
 @RestController
@@ -22,9 +23,9 @@ public class NoteController {
     @Autowired
     private NoteService userService;
 
-    @GetMapping("/notes/user/{userId}")
-    public List<Note> getAllNotesForUser(@PathVariable Long userId) {
-        return userService.getAllNotesForUser(userId);
+    @GetMapping("/notes/user")
+    public List<Note> getAllNotesForUser(@AuthenticationPrincipal UserPrincipal user) {
+        return userService.getAllNotesForUser(user.getId());
     }
 
     @PostMapping("/notes/user/{userId}")

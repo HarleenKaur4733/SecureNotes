@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.harleen.secure_notes.entity.User;
 import com.harleen.secure_notes.repository.UserRepository;
+import com.harleen.secure_notes.security.UserPrincipal;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -23,11 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
 
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .roles(user.getRole())
-                .build();
+        return new UserPrincipal(user);
     }
 
 }
