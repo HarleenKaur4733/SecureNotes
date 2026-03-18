@@ -23,6 +23,8 @@ public class NoteController {
     @Autowired
     private NoteService userService;
 
+    // To avoid exposing userId in the API,
+    // we can get the authenticated custom user's details from the security context
     @GetMapping("/notes/user")
     public List<Note> getAllNotesForUser(@AuthenticationPrincipal UserPrincipal user) {
         return userService.getAllNotesForUser(user.getId());
